@@ -19,6 +19,11 @@ readonly class PagesRepository
         return $stmt->fetchAll(PDO::FETCH_CLASS, PageModel::class);
     }
 
+    public function fetchAllPages(): array
+    {
+        return $this->fetchForNavigation();
+    }
+
     public function fetchBySlug(string $slug): ?PageModel
     {
         $stmt = $this->pdo->prepare('SELECT `id`, `slug`, `title`, `content` FROM `pages` WHERE `slug` = :slug');
@@ -31,5 +36,18 @@ readonly class PagesRepository
             return null;
         }
         return $page;
+    }
+
+    public function createNewPage(string $title, string $slug, string $content): bool
+    {
+        try {
+            $stmt = $this->pdo->prepare('INSERT INTO `pages` (`title`, `slug`, `content`) VALUES (:title, :slug, :content)');
+            $stmt->bindValue(':title', $title);
+            $stmt->bindValue(':slug', $slug);
+            $stmt->bindValue(':content', $content);
+            return $stmt->execute();
+        } catch (\PDOException $e) {
+            return false;
+        }
     }
 }

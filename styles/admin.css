@@ -1,0 +1,16 @@
+:root {
+    --accent: #d202f8;
+    --accent-bg: #e8e8e8;
+}
+
+.admin-pages-table {
+    min-width: 100%;
+}
+
+.create-page-errors {
+    margin-bottom: 1rem;
+}
+
+.create-page-errors__item {
+    color: red;
+}

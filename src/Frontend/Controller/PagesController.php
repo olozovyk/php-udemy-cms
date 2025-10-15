@@ -14,7 +14,7 @@ class PagesController extends AbstractController
     public function showPage(string $pageKey): void
     {
         $page = $this->pagesRepository->fetchBySlug($pageKey);
-        if (empty($page)) {
+        if (!isset($page)) {
             $this->error404();
             return;
         }
