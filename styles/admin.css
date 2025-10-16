@@ -14,3 +14,16 @@
 .create-page-errors__item {
     color: red;
 }
+
+.create-form__button-link.button-link {
+    border: none;
+    border-radius: 0;
+    color: var(--accent);
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+.button-link[type="submit"]:enabled:hover {
+    text-decoration: none;
+    filter: none;
+}

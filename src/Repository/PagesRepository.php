@@ -45,7 +45,20 @@ readonly class PagesRepository
             $stmt->bindValue(':title', $title);
             $stmt->bindValue(':slug', $slug);
             $stmt->bindValue(':content', $content);
-            return $stmt->execute();
+            $stmt->execute();
+            return $stmt->rowCount() > 0;
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+    public function deletePage(int $id): bool
+    {
+        try {
+            $stmt = $this->pdo->prepare('DELETE FROM `pages` WHERE `id` = :id');
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->rowCount() > 0;
         } catch (\PDOException $e) {
             return false;
         }

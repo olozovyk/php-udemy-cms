@@ -28,11 +28,11 @@ class PageAdminController extends AbstractAdminController
             $slug = @(string)($_POST['slug'] ?? '');
             $content = @(string)($_POST['content'] ?? '');
 
+            $slug = normalizeSlug($slug);
+
             if (empty($title) || empty($slug) || empty($content)) {
                 $errors[] = 'Please fill in all the fields.';
             }
-
-            $slug = normalizeSlug($slug);
 
             $isSlugExist = $this->pagesRepository->fetchBySlug($slug);
             if (isset($isSlugExist)) {
@@ -51,5 +51,20 @@ class PageAdminController extends AbstractAdminController
         $this->render('pages/create', [
             'errors' => $errors,
         ]);
+    }
+
+    public function delete(): void
+    {
+        if (empty($_POST) || mb_strtoupper($_POST['_method']) !== 'DELETE') {
+            return;
+        }
+
+        $id = (int) $_POST['id'];
+        $res = $this->pagesRepository->deletePage($id);
+
+        if ($res) {
+            header('Location: index.php?route=admin/pages');
+            die();
+        }
     }
 }
