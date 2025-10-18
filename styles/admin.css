@@ -15,9 +15,16 @@
     color: red;
 }
 
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
 .create-form__button-link.button-link {
     border: none;
     border-radius: 0;
+    line-height: 1.5;
+    padding: 0;
     color: var(--accent);
     background-color: transparent;
     text-decoration: underline;

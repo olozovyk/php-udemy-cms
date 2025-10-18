@@ -1,5 +1,4 @@
 <h1>Admin: Manage pages</h1>
-
 <?php use App\Model\PageModel;
 
 if (isset($pages)): ?>
@@ -18,12 +17,15 @@ if (isset($pages)): ?>
                 <td><?= e($page->id) ?></td>
                 <td><?= e($page->title) ?></td>
                 <td>
-                    <form class="create-form" method="POST"
-                          action="index.php?route=admin/pages/delete">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="id" value=<?= $page->id ?>>
-                        <input class="create-form__button-link button-link" type="submit" value="Delete">
-                    </form>
+                    <div class="actions">
+                        <a href="index.php?<?= http_build_query(['route' => 'admin/pages/edit', 'id' => $page->id]) ?>">Edit</a>
+                        <form class="create-form" method="POST"
+                              action="index.php?route=admin/pages/delete">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="id" value=<?= $page->id ?>>
+                            <input class="create-form__button-link button-link" type="submit" value="Delete">
+                        </form>
+                    </div>
                 </td>
             </tr>
         <?php endforeach; ?>

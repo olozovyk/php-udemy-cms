@@ -1,3 +1,4 @@
+<h1>Create new page</h1>
 <?php if (!empty($errors)): ?>
     <ul class="create-page-errors">
         <?php foreach ($errors as $error): ?>

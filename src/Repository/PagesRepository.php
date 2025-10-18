@@ -38,10 +38,43 @@ readonly class PagesRepository
         return $page;
     }
 
+    public function fetchById(int $id): ?PageModel
+    {
+        $stmt = $this->pdo->prepare('SELECT `id`, `slug`, `title`, `content` FROM `pages` WHERE `id` = :id');
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS, PageModel::class);
+        $page = $stmt->fetch();
+
+        if (empty($page)) {
+            return null;
+        }
+        return $page;
+    }
+
     public function createNewPage(string $title, string $slug, string $content): bool
     {
         try {
             $stmt = $this->pdo->prepare('INSERT INTO `pages` (`title`, `slug`, `content`) VALUES (:title, :slug, :content)');
+            $stmt->bindValue(':title', $title);
+            $stmt->bindValue(':slug', $slug);
+            $stmt->bindValue(':content', $content);
+            $stmt->execute();
+            return $stmt->rowCount() > 0;
+        } catch (\PDOException $e) {
+            return false;
+        }
+    }
+
+    public function editPage(int $id, string $title, string $slug, string $content): bool
+    {
+        try {
+            $stmt = $this->pdo->prepare('
+                UPDATE `pages` 
+                SET `title` = :title, `slug` = :slug, `content` = :content
+                WHERE `id` = :id
+                ');
+            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->bindValue(':title', $title);
             $stmt->bindValue(':slug', $slug);
             $stmt->bindValue(':content', $content);
