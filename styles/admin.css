@@ -7,11 +7,11 @@
     min-width: 100%;
 }
 
-.create-page-errors {
+.create-page-errors, .login-errors {
     margin-bottom: 1rem;
 }
 
-.create-page-errors__item {
+.create-page-errors__item, .login-errors__item {
     color: red;
 }
 
