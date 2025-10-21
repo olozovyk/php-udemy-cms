@@ -7,6 +7,7 @@
     </ul>
 <?php endif; ?>
 <form method="POST" action="index.php?route=admin/pages/create">
+    <input type="hidden" name="_csrf" value="<?= gen_csrf_token() ?>">
     <label for="title">Title</label>
     <input type="text" name="title" id="title" value="<?php if (isset($_POST['title'])) echo e($_POST['title']) ?>">
     <label for="slug">Slug</label>

@@ -2,8 +2,15 @@
 
 namespace App\Admin\Controller;
 
+use App\Admin\Support\AuthService;
+
 class AbstractAdminController
 {
+    public function __construct(protected AuthService $authService)
+    {
+
+    }
+
     protected function render(string $view, array $params): void
     {
         extract($params);
@@ -12,6 +19,7 @@ class AbstractAdminController
         require __DIR__ . '/../../../views/admin/' . $view . '.view.php';
         $contents = ob_get_clean();
 
+        $isLoggedIn = $this->authService->isLoggedIn();
         require __DIR__ . '/../../../views/admin/layouts/main.view.php';
     }
 

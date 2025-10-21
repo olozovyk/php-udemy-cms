@@ -21,6 +21,7 @@ if (isset($pages)): ?>
                         <a href="index.php?<?= http_build_query(['route' => 'admin/pages/edit', 'id' => $page->id]) ?>">Edit</a>
                         <form class="create-form" method="POST"
                               action="index.php?route=admin/pages/delete">
+                            <input type="hidden" name="_csrf" value="<?= gen_csrf_token() ?>">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="id" value=<?= $page->id ?>>
                             <input class="create-form__button-link button-link" type="submit" value="Delete">

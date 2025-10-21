@@ -16,6 +16,9 @@ use App\Model\PageModel;
         <a href="index.php?route=admin/pages">CMS Project</a>
     </h1>
     <p>An admin area</p>
+    <?php if (!empty($isLoggedIn)): ?>
+        <a href="index.php?route=admin/logout">Logout</a>
+    <?php endif; ?>
 </header>
 <main>
     <?php if (isset($contents)): ?>

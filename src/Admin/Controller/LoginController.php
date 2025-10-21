@@ -6,9 +6,9 @@ use App\Admin\Support\AuthService;
 
 class LoginController extends AbstractAdminController
 {
-    public function __construct(private readonly AuthService $authService)
+    public function __construct(AuthService $authService)
     {
-
+        parent::__construct($authService);
     }
 
     public function login(): void
@@ -41,5 +41,11 @@ class LoginController extends AbstractAdminController
         $this->render('login/login', [
             'errors' => $errors,
         ]);
+    }
+
+    public function logout(): void
+    {
+        $this->authService->logout();
+        header('Location: index.php?route=admin/pages');
     }
 }

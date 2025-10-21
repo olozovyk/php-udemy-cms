@@ -27,16 +27,23 @@ class AuthService
         if (!$userVerified) return false;
 
         $this->startSession();
-        $_SESSION['adminUser'] = $user['id'];
+        $_SESSION['adminUserId'] = $user['id'];
         session_regenerate_id(true);
 
         return true;
     }
 
+    public function logout(): void
+    {
+        $this->startSession();
+        unset($_SESSION['adminUserId']);
+        session_regenerate_id();
+    }
+
     public function isLoggedIn(): bool
     {
         $this->startSession();
-        return !empty($_SESSION['adminUser']);
+        return !empty($_SESSION['adminUserId']);
     }
 
     public function ensureLoggedIn(): void

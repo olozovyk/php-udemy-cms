@@ -9,6 +9,7 @@
 <?php if (isset($page)): ?>
     <form method="POST"
           action="index.php?<?= http_build_query(['route' => 'admin/pages/edit', 'id' => $page['id']]) ?>">
+        <input type="hidden" name="_csrf" value="<?= gen_csrf_token() ?>">
         <label for="title">Title</label>
         <input type="text" name="title" id="title" value="<?php if (!empty($page['title'])) echo e($page['title']) ?>">
         <label for="slug">Slug</label>
