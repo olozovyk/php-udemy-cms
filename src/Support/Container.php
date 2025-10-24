@@ -6,13 +6,10 @@ class Container
 {
     private array $instances = [];
     private array $recipes = [];
-    static Container $container;
+    private static Container $container;
 
     private function __construct()
     {
-        if (!isset($this->instances['container'])) {
-            $this->instances['container'] = $this;
-        }
     }
 
     static function getContainer(): Container
