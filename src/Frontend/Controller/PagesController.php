@@ -18,8 +18,13 @@ class PagesController extends AbstractController
             $this->error404();
             return;
         }
+
+        $paragraphsArray = explode("\n", $page->content);
+        $paragraphsArrayTrimmed = array_filter($paragraphsArray, fn(string $p) => trim($p) !== '');
+
         $this->render('pages/showPage', [
             'page' => $page,
+            'content' => $paragraphsArrayTrimmed
         ]);
     }
 }

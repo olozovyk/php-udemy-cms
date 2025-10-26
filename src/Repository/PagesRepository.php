@@ -14,7 +14,7 @@ readonly class PagesRepository
 
     public function fetchForNavigation(): array
     {
-        $stmt = $this->pdo->prepare('SELECT `id`, `slug`, `title`, `content` FROM `pages` ORDER BY `id`');
+        $stmt = $this->pdo->prepare('SELECT `id`, `slug`, `title`, `content`, `image` FROM `pages` ORDER BY `id`');
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS, PageModel::class);
     }

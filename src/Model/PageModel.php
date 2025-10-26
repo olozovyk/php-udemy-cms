@@ -8,4 +8,5 @@ class PageModel
     public string $slug;
     public string $title;
     public string $content;
+    public ?string $image;
 }
