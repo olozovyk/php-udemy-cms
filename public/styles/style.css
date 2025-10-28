@@ -65,8 +65,8 @@ select {
 
 body {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 
     font-family: var(--font-body), system-ui, -apple-system, sans-serif;
     color: var(--color-text);
@@ -90,10 +90,8 @@ h6 {
 .container {
     width: 100%;
     position: relative;
-}
 
-@media (min-width: 769px) {
-    .container {
+    @media (min-width: 768px) {
         width: min(1200px, calc(100% - 2rem));
         margin-inline: auto;
     }
@@ -106,7 +104,6 @@ h6 {
     padding: var(--space-sm) 0;
 
     color: #fff;
-
     background-image: url('../images/bg.jpg');
     background-size: cover;
     background-position: center;
@@ -117,10 +114,8 @@ h6 {
 
 .header .container {
     padding-inline: var(--space-md);
-}
 
-@media (min-width: 768px) {
-    .header .container {
+    @media (min-width: 768px) {
         padding-inline: 0;
     }
 }
@@ -190,6 +185,20 @@ h6 {
     transform: translateX(100%);
     transition: transform var(--transition-base);
     z-index: 90;
+
+    @media (min-width: 768px) {
+        position: static;
+        height: auto;
+        padding: 0;
+
+        display: flex;
+        justify-content: flex-end;
+        flex: 0 0 55%;
+
+        transform: none;
+        box-shadow: none;
+        background-color: transparent;
+    }
 }
 
 .nav::before {
@@ -204,6 +213,10 @@ h6 {
     visibility: hidden;
     transition: var(--transition-base);
     z-index: -1;
+
+    @media (min-width: 768px) {
+        display: none;
+    }
 }
 
 .nav.active {
@@ -224,15 +237,21 @@ h6 {
     gap: var(--space-sm);
     row-gap: var(--space-2xs);
     width: 100%;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+        gap: var(--space-sm);
+    }
 }
 
 .nav__item {
     width: 100%;
     opacity: 0;
-    /*TODO FIX add transition target*/
-    transform: translateX(20px);
-    transition: var(--transition-base);
-    /*transition-delay: calc(var(--item-index, 0) * 0.1s);*/
+
+    @media (min-width: 768px) {
+        width: auto;
+        opacity: 1;
+    }
 }
 
 .nav.active .nav__item {
@@ -256,78 +275,35 @@ h6 {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 999px;
     overflow: hidden;
-    /*TODO FIX: */
-    transition: all var(--transition-base);
-}
+    transition: color var(--transition-base), background-color var(--transition-base), transform var(--transition-base);
 
-.nav__link::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: var(--color-secondary);
-    transform: translateX(-101%);
-    transition: transform var(--transition-base);
-}
-
-.nav__link.active,
-.nav__link:hover,
-.nav__link:focus-visible {
-    color: #fff;
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-1px);
-}
-
-.nav__link:hover::after,
-.nav__link:focus-visible::after {
-    transform: translateX(0);
-}
-
-@media (min-width: 769px) {
-    /* TODO fix: */
-    .nav {
-        position: static;
-        width: auto;
-        height: auto;
-        max-width: 55%;
-        padding: 0;
-        display: flex;
-        justify-content: flex-end;
-        flex: 0 0 55%;
-
-        transform: none;
-        box-shadow: none;
-        background-color: transparent;
-    }
-
-    .nav::before {
-        display: none;
-    }
-
-    .nav__list {
-        flex-direction: row;
-        gap: var(--space-sm);
-    }
-
-    .nav__item {
-        width: auto;
-        opacity: 1;
-        transform: none;
-    }
-
-    .nav__link {
+    @media (min-width: 768px) {
         font-size: 0.85rem;
         color: rgba(255, 255, 255, 0.85);
         padding: var(--space-2xs) var(--space-sm);
         border-bottom: none;
     }
 
-    .nav__link:hover,
-    .nav__link:focus-visible {
+    &:hover, &:focus-visible, &.active {
         background-color: rgba(255, 255, 255, 0.15);
         color: #fff;
+        transform: translateY(-1px);
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--color-secondary);
+        transform: translateX(-101%);
+        transition: transform var(--transition-base);
+    }
+
+    &:hover::after, &:focus-visible::after {
+        transform: translateX(0);
     }
 }
 
@@ -342,15 +318,25 @@ h6 {
 
     cursor: pointer;
     z-index: 100;
-}
 
-.burger:hover {
-    color: var(--color-secondary);
+    @media (min-width: 768px) {
+        display: none;
+    }
+
+    &:hover {
+        color: var(--color-secondary);
+    }
 }
 
 .burger__icon {
     display: block;
-    transition: var(--transition-base);
+    transition: transform var(--transition-base);
+
+    .burger.active & {
+        opacity: 0;
+        visibility: hidden;
+        transform: rotate(90deg);
+    }
 }
 
 .burger__icon--close {
@@ -361,40 +347,23 @@ h6 {
     opacity: 0;
     visibility: hidden;
     transform: rotate(-90deg);
-}
+    transition: transform var(--transition-base);
 
-.burger.active .burger__icon:not(.burger__icon--close) {
-    opacity: 0;
-    visibility: hidden;
-    transform: rotate(90deg);
-}
-
-.burger.active .burger__icon--close {
-    opacity: 1;
-    visibility: visible;
-    transform: rotate(0);
-}
-
-.burger__path {
-    transition: var(--transition-base);
-}
-
-@media (min-width: 769px) {
-    .burger {
-        display: none;
+    .burger.active & {
+        opacity: 1;
+        visibility: visible;
+        transform: rotate(0);
     }
 }
 
 /* MAIN: */
 
 .main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+    width: 100%;
 }
 
 .main .container {
-    flex: 1;
+    height: 100%;
 }
 
 .content-wrapper {
@@ -404,21 +373,7 @@ h6 {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
-.page-title {
-    position: relative;
-    margin: 0 auto var(--space-lg);
-    max-width: 700px;
-
-    font-size: clamp(2.4rem, 5vw, 3.5rem);
-    letter-spacing: -0.02em;
-    text-align: left;
-    font-weight: 800;
-    line-height: 1.1;
-
-    color: var(--color-text);
-}
-
-.page-error-title {
+.page-title, .page-error-title {
     position: relative;
     margin: 0 auto var(--space-lg);
     max-width: 700px;
@@ -484,10 +439,8 @@ h6 {
 
     text-align: center;
     font-size: 0.9rem;
-}
 
-@media (min-width: 769px) {
-    .footer .container {
+    @media (min-width: 768px) {
         padding-inline: 0;
     }
 }

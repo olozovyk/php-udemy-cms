@@ -14,7 +14,7 @@ class LoginController extends AbstractAdminController
     public function login(): void
     {
         if($this->authService->isLoggedIn()) {
-            header('Location: index.php?route=admin/pages');
+            header('Location: public/index.php?route=admin/pages');
             exit;
         }
 
@@ -32,7 +32,7 @@ class LoginController extends AbstractAdminController
             if (!$userVerified) {
                 $errors[] = 'Username or password is incorrect.';
             } else {
-                header('Location: index.php?route=admin/pages');
+                header('Location: public/index.php?route=admin/pages');
                 exit;
             }
 

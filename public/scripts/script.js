@@ -1,14 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
     const burger = document.querySelector(".burger");
     const nav = document.querySelector(".nav");
-    const navItems = document.querySelectorAll(".nav__item");
     const body = document.body;
     let isMenuOpen = false;
-
-    // Add index to nav items for staggered animation
-    navItems.forEach((item, index) => {
-        item.style.setProperty("--item-index", index);
-    });
+    const BREAKPOINT_TABLET = 768;
 
     // Toggle menu on burger click
     burger?.addEventListener("click", () => {
@@ -45,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", () => {
         clearTimeout(timeout);
         timeout = setTimeout(() => {
-            if (window.innerWidth > 768 && isMenuOpen) {
+            if (window.innerWidth > BREAKPOINT_TABLET && isMenuOpen) {
                 isMenuOpen = false;
                 burger?.classList.remove("active");
                 nav?.classList.remove("active");
