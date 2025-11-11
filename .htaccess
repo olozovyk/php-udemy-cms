@@ -8,6 +8,6 @@ RewriteEngine On
     Require all denied
 </FilesMatch>
 
-RewriteCond %{REQUEST_URI} !^/cms/public/(styles|images|scripts)/
-RewriteCond %{REQUEST_URI} !^/cms/public/index\.php$
-RewriteRule ^(.*)$ /cms/public/index.php [R=301,L]
+RewriteCond %{REQUEST_URI} !^/public/(styles|images|scripts)/
+RewriteCond %{REQUEST_URI} !^/public/index\.php$
+RewriteRule ^(.*)$ /public/index.php [R=301,L]
